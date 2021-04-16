@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vuejs/vuejs-2.5.16.js"></script>
+    <script type="text/javascript" src="../vuejs/axios-0.18.0.js"></script>
+    <style>
+        #app table {
+            width: auto;
+            height: auto;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="user">
+            <table align="center" border="1" rules="all">
+                <tr align="center">
+                    <td colspan="100" bgcolor="#adff2f">
+                        姓名：<input type="text" v-model ="stu.uname">
+                        年龄:<input type="text" v-model="stu.age"/>~<input type="text" v-model="stu.eage"/>
+                        性别:<input type="radio" value="男" v-model="stu.sex">男 <input type="radio" value="女"
+                                                                                    v-model="stu.sex"/>女
+                    </select>
+                        <input type="button" value="搜索" @click="findAllConn()"/>
+                    </td>
+                </tr>
+                <tr align="center" bgcolor="#00ffff">
+                    <th>编码</th>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>生日</th>
+                    <th>手机号</th>
+                    <th>地址</th>
+                    <th>科室</th>
+                    <th>职位</th>
+                    <th>操作</th>
+                </tr>
+                <tr v-for="u in userlist">
+                    <td>{{u.id}}</td>
+                    <td>{{u.uname}}</td>
+                    <td>{{u.age}}</td>
+                    <td>{{u.birthday}}</td>
+                    <td>{{u.telphone}}</td>
+                    <td>{{u.address}}</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <button @click="dept(u.id)">选择科室</button>
+                        <button @click="uppost(u.id)">分配职位</button>
+                        <button @click="meun(u.id)">查看菜单</button>
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td colspan="100">
+                        每页显示<input type="number" @change="changesize(pageSize)" size="1" v-model="pageSize"/>条记录;当前{{page.currentPage}}/{{page.pageCount}}页，共{{page.count}}条记录
+                        <input type="button" value="首页" @click="paging(1)"/>
+                        <input type="button" value="上一页" @click="paging(page.previousPage)"/>
+                        <input type="button" value="下一页" @click="paging(page.nextPage)"/>
+                        <input type="button" value="尾页" @click="paging(page.pageCount)"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="userdeptdiv" style="display: none">
+            <table style="background: #adff2f">
+                <tr>
+                    <td><h1>正在为{{savedept.uname}}选择科室</h1></td>
+                </tr>
+                <tr>
+                    <td>
+                        科室
+                    </td>
+                    <td>
+                        <span v-for="(d,index) in deptBeans">
+                            <input type="checkbox" v-model="savedept.depts" :value="d.id">{{d.deptname}}<br>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button @click="upsept()">提交</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!--是给用户分配职位的-->
+        <div id="userpostdiv" style="display: none">
+            <table align="center" border="1" rules="all">
+                <tr align="center">
+                    <td colspan="100">
+                        <h1>目前正在给--{{entity.uname}}--分配职位</h1>
+                    </td>
+                </tr>
+                <tr v-if="dlist.length==0">
+                    <td colspan="100">
+                        该用户目前还没有科室，请先选择科室
+                    </td>
+                </tr>
+                <tr v-for="d in dlist">
+                    <td>{{d.deptname}}</td>
+                    <td>
+                        <span v-for="p in d.plist">
+                            <input type="checkbox" v-model="d.postids" :value="p.id"/>{{p.postname}}<br>
+                        </span>
+                    </td>
+                </tr>
+                <tr v-for="d in dlist">
+                    <td>是不是主职位</td>
+                    <td><input type="radio" value="1" v-model="d.deptidss">是 <input type="radio" value="0" v-model="d.deptidss"/>否</td>
+                </tr>
+                <tr align="center">
+                    <td colspan="100">
+                        <button @click="addpost()">保存</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../myjs/user_list.js"></script>
+</html>

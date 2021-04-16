@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vuejs/vuejs-2.5.16.js"></script>
+    <script type="text/javascript" src="../vuejs/axios-0.18.0.js"></script>
+    <style>
+        #app table {
+            width: auto;
+            height: auto;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div id = "dept">
+    <div id = "updept">
+        <table border="1" align="center" style="background-color: #82DCE3 " >
+            <tr>
+                <th>编号</th>
+                <th>科室</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="d in deptlist">
+                <td>{{d.id}}</td>
+                <td>{{d.deptname}}</td>
+                <td><button @click="del(d.id)">删除</button><button @click="godeptpost(d.id)">选择职位</button></td>
+            </tr>
+            <tr align="center">
+                <td colspan="100">
+                    每页显示<input type="number" @change="changesize(pageSize)" size="1" v-model="pageSize"/>条记录;当前{{page.currentPage}}/{{page.pageCount}}页，共{{page.count}}条记录
+                    <input type="button" value="首页" @click="paging(1)"/>
+                    <input type="button" value="上一页" @click="paging(page.previousPage)"/>
+                    <input type="button" value="下一页" @click="paging(page.nextPage)"/>
+                    <input type="button" value="尾页" @click="paging(page.pageCount)"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="orupdept" style="display: none">
+        <table border="1" style="background: #82DCE3 " align="center"  >
+            <tr>
+                <td><h2>正在为{{entity.deptname}}分配职位</h2></td>
+            </tr>
+            <tr>
+                <td>职业</td>
+                <td><span v-for="(d,index) in dept"><input type="checkbox" v-model="depts" :value="d.id">{{d.postname}}</span><br></td>
+            </tr>
+            <tr>
+                <td>是不是主职位</td>
+                <td><select v-model="dept.ismain">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select></td>
+            </tr>
+            <tr>
+               <td><button @click="sava()">提交</button></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../myjs/dept_list.js"></script>
+</html>

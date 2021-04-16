@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../vuejs/vuejs-2.5.16.js"></script>
+    <script type="text/javascript" src="../vuejs/axios-0.18.0.js"></script>
+</head>
+<body>
+<div id="menu">
+    <div id="addmenu">
+        <table style="background-color: #00B83F" border="1" align="center">
+            <tr>
+                <th>编号</th>
+                <th>父id</th>
+                <th>节点名称</th>
+                <th>url</th>
+                <th>target</th>
+                <th>icon</th>
+                <th>是不是按钮</th>
+                <th>操作
+                <button @click="goadd()">添加</button>
+                </th>
+            </tr>
+            <tr v-for="m in menulist">
+                <td>{{m.id}}</td>
+                <td>{{m.pid}}</td>
+                <td>{{m.mname}}</td>
+                <td>{{m.url}}</td>
+                <td>{{m.target}}</td>
+                <td>{{m.icon}}</td>
+                <td>{{m.isbutton===1?'是':'不是'}}</td>
+                <td><button @click="selectmenu(m.id)">下级</button>
+                <button @click="del(m.id)">删除</button><button @click="up(m.id)">修改</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="saveorupmenu" style="display:none">
+        <table align="center" border="1" style="background-color: #00B83F">
+            <tr>
+                <td>
+                    父id
+                </td>
+                <td>{{pid}}</td>
+            </tr>
+            <tr>
+                <td>
+                    节点名称
+                </td>
+                <td><input type="text" v-model="savemenu.mname"></td>
+            </tr>
+            <tr>
+                <td>
+                    url
+                </td>
+                <td>
+                    <input type="text" v-model="savemenu.url" placeholder="..\pages\right.html">
+                </td>
+            </tr>
+            <tr>
+                <td>target</td>
+                <td><input type="text" v-model="savemenu.target" placeholder="rightFrame"></td>
+            </tr>
+            <tr>
+                <td>icon</td>
+                <td>
+                    <select v-model="savemenu.icon">
+                        <option value="../csstree/img/diy/1_close.png">close.png</option>
+                        <option value="../csstree/img/diy/1_open.png">open.png</option>
+                        <option value="../csstree/img/diy/2.png">2.png</option>
+                        <option value="../csstree/img/diy/3.png">3.png</option>
+                        <option value="../csstree/img/diy/4.png">4.png</option>
+                        <option value="../csstree/img/diy/5.png">5.png</option>
+                        <option value="../csstree/img/diy/6.png">6.png</option>
+                        <option value="../csstree/img/diy/7.png">7.png</option>
+                        <option value="../csstree/img/diy/8.png">8.png</option>
+                        <option value="../csstree/img/diy/9.png">9.png</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>是否是按钮</td>
+               <td><select v-model="savemenu.isbutton">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+               </select></td>
+            </tr>
+            <tr align="center">
+                <td colspan="100">
+                    <input type="button" value="提交" @click="addorup()"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../myjs/menu_list.js"></script>
+</html>
