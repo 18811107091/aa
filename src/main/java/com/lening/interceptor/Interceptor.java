@@ -29,7 +29,7 @@ public class Interceptor implements HandlerInterceptor {
             return true;
         }else{
             //需要过滤的，首先要判断他有没有登录，要是没有登录回去登录
-            Object login = request.getSession().getAttribute("login");
+            Object login = request.getSession().getAttribute("gologin");
             if(login==null){
                 //没登录并且不是特殊的
                 request.getRequestDispatcher("/index.html").forward(request, response);
