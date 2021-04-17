@@ -19,7 +19,7 @@
     LEFT JOIN tb_meun d ON c.meunid = d.id
     where d.isbutton=0 and userid = #{userid} and a.ismain = 1
   </select>
-    <select id="selectusermeunUrlsByid" resultType="String">
+    <select id="selectusermeunUrlsByid" resultType="string">
     SELECT  d.url
     FROM
 	tb_user_post a

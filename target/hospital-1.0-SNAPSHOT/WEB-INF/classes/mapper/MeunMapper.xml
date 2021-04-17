@@ -19,14 +19,14 @@
     LEFT JOIN tb_meun d ON c.meunid = d.id
     where d.isbutton=0 and userid = #{userid} and a.ismain = 1
   </select>
-    <select id="selectusermeunUrlsByid" resultType="MeunBean">
-    SELECT  d.*
+    <select id="selectusermeunUrlsByid" resultType="string">
+    SELECT  d.url
     FROM
 	tb_user_post a
     LEFT JOIN tb_post b ON a.postid = b.id
     LEFT JOIN tb_post_meun c ON b.id = c.postid
     LEFT JOIN tb_meun d ON c.meunid = d.id
-    where d.isbutton=0 and userid = #{userid} and a.ismain = 1
+    where  userid = #{userid}
     </select>
     <sql id="Example_Where_Clause">
         <where>
