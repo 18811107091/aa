@@ -82,14 +82,14 @@ public class UserServiceImpl implements UserService {
         }*/
         if(gologin!=null){
             List<MeunBean> list = null;
+            redisUtil.removeObject(gologin.getId());
             //从缓存中获取用户列表
             Object userListCache = redisUtil.getObject(gologin.getId());
-
+            list = (List<MeunBean>) userListCache;
             //判断缓存中是否存在
             if (userListCache != null) {//不空，则强转返回
                 System.out.println("redis中存在，直接返回");
                 list = (List<MeunBean>) userListCache;
-
             }else{
                 System.out.println("redis缓存中不存在，从数据库中取出，并且放入缓存");
                 //查询数据库，取出
@@ -99,7 +99,6 @@ public class UserServiceImpl implements UserService {
             }
             return list;
         }
-
         return null;
     }
 
@@ -121,7 +120,7 @@ public class UserServiceImpl implements UserService {
         List<UserBean> userBeans = userMapper.selectByExample(userBeanExample);
         PageInfo<UserBean> userBeanPageInfo = new PageInfo<UserBean>(userBeans);
         Long total = userBeanPageInfo.getTotal();
-        Page page = new Page(userBeanPageInfo.getPageNum()+"",total.intValue(),userBeanPageInfo.getPageSize()+"");
+        Page<UserBean> page = new Page<UserBean>(userBeanPageInfo.getPageNum()+"",total.intValue(),userBeanPageInfo.getPageSize()+"");
         page.setList(userBeans);
         return page;
     }
@@ -139,7 +138,7 @@ public class UserServiceImpl implements UserService {
         List<PostBean> postBeans = postMapper.selectByExample(postBeanExample);
         PageInfo<PostBean> postBeanPageInfo = new PageInfo<PostBean>(postBeans);
         Long total = postBeanPageInfo.getTotal();
-        Page postBeanPage = new Page(postBeanPageInfo.getPageNum()+"",total.intValue(),postBeanPageInfo.getPageSize()+"");
+        Page<PostBean> postBeanPage = new Page<PostBean>(postBeanPageInfo.getPageNum()+"",total.intValue(),postBeanPageInfo.getPageSize()+"");
         postBeanPage.setList(postBeans);
         return postBeanPage;
     }
@@ -150,7 +149,7 @@ public class UserServiceImpl implements UserService {
         List<DeptBean> deptBeans = deptMapper.selectByExample(null);
         PageInfo<DeptBean> PageInfo = new PageInfo<DeptBean>(deptBeans);
         long total = PageInfo.getTotal();
-        Page page = new Page(PageInfo.getPageNum()+"", (int) total,PageInfo.getSize()+"");
+        Page<DeptBean> page = new Page<DeptBean>(PageInfo.getPageNum()+"", (int) total,PageInfo.getSize()+"");
         page.setList(deptBeans);
         return page;
     }
