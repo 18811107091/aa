@@ -101,7 +101,9 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
-
+    //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     public Page getUserlist(UserBean userBean, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         UserBeanExample userBeanExample = new UserBeanExample();
